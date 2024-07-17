@@ -2,27 +2,28 @@ import React, { useState, useEffect } from "react";
 import { GoogleLogin } from '@react-oauth/google';
 import { Link } from "react-router-dom";
 import ncu from "../assets/ncu.png";
-import ncuDark from "../assets/ncuDark.png";
+import ncuDark from "../assets/ncuDark.png"; // Import the dark mode logo
 import "../App.css";
 import "./header.css";
-import ToggleSwitch from "./ToggleSwitch"; // Adjust the path if necessary
-import { decodeToken } from 'jwt-decode'; // Corrected import
+import ToggleSwitch from "./ToggleSwitch";
+import { jwtDecode} from 'jwt-decode';
 
 function Header() {
   const [user, setUser] = useState({});
   const [isChecked, setIsChecked] = useState(true);
   const [imgUrl, setImgUrl] = useState(ncuDark);
 
-  function handleCallbackResponse(response) {
+  function handleCallbackResponse(response){
     console.log("Encoded JWT ID token :" + response.credential);
-    var userObject = decodeToken(response.credential); // Use decodeToken instead of jwtDecode
+    var userObject = jwtDecode(response.credential);
     console.log(userObject);
     setUser(userObject);
     document.getElementById("profileBtn").hidden = false;
     document.getElementById("signInDiv").hidden = true;
+
   }
 
-  useEffect(() => {
+  useEffect(()=>{
     /* global google */
     google.accounts.id.initialize({
       client_id: "957033742281-1rd2kunk0u0dmj4h822l7mf17bdc9go1.apps.googleusercontent.com",
@@ -31,10 +32,12 @@ function Header() {
 
     google.accounts.id.renderButton(
       document.getElementById("signInDiv"),
-      { theme: "outline", size: "large" }
-    );
+      {theme: "outline", size: "large"}
+    )
 
   }, []);
+
+
 
   useEffect(() => {
     if (isChecked) {
@@ -48,7 +51,6 @@ function Header() {
     isChecked ? setImgUrl(ncu) : setImgUrl(ncuDark);
     setIsChecked(!isChecked);
   };
-
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
@@ -96,10 +98,10 @@ function Header() {
           </label>
         </div>
         <div className="btns">
-          {/* <GoogleLogin  onSuccess={responseMessage} onError={errorMessage} /> */}
-          <button id="signInDiv"></button>
+{/*         <GoogleLogin  onSuccess={responseMessage} onError={errorMessage} /> */}
+        <button id="signInDiv"></button>
 
-          <Link className="blue-btn" id="profileBtn" hidden={!user.name} to="/Profile">
+          <Link className="blue-btn" id="profileBtn" hidden="true" to="/Profile">
             <img
               width="35"
               height="35"

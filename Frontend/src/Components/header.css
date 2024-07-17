@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   z-index: 100;
-  background-color: #e8e8e8;
+  background-color: #ffffff;
 }
 
 .logo {
@@ -83,7 +83,7 @@
 
 /* Dark mode styles */
 body.dark .page-header {
-  background-color: #1a1a1a;
+  background-color: #191e30;
 }
 
 body.dark .navbar a {
